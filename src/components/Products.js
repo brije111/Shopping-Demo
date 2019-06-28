@@ -3,19 +3,27 @@ import ProductFilter from "./ProductFilter";
 import ProductList from "./ProductList";
 import axios from "axios";
 import { Jumbotron } from "react-bootstrap";
-//import { getAllProduct } from "../helper/Producthelper";
+import {
+  getAllProductHelper,
+  onExpiredFilterHelper,
+  onExpiringSoonFilterHelper,
+  getPageData
+} from "../helper/Producthelper";
+import PaginationComponent from "./PaginationComponent";
 
 class Products extends Component {
   constructor(props) {
     super(props);
     this.state = {
       data: [],
-      originData: []
+      originData: [],
+      current_page: 1,
+      per_page_doc: 9
     };
-    this.getAllProduct = this.getAllProduct.bind(this);
     this.onAllFilter = this.onAllFilter.bind(this);
     this.onExpiredFilter = this.onExpiredFilter.bind(this);
     this.onExpiringSoonFilter = this.onExpiringSoonFilter.bind(this);
+    this.onPageSelected = this.onPageSelected.bind(this);
   }
 
   componentDidMount() {
@@ -23,26 +31,18 @@ class Products extends Component {
       .get("assets/raw/products.json")
       .then(response => {
         console.log(response.data);
-        const _data = this.getAllProduct(response.data);
-        this.setState({ data: _data, originData: _data });
+        const _data = getAllProductHelper(response.data);
+        this.setState({
+          data: getPageData(_data),
+          originData: _data
+        });
       })
       .catch(err => {
         console.log(err);
       });
   }
 
-  getAllProduct(json, products = []) {
-    if (json.hasOwnProperty("children")) {
-      json.children.forEach(element => {
-        this.getAllProduct(element, products);
-      });
-    } else {
-      products.push(json);
-    }
-    return products;
-  }
-
-  onAllFilter() {
+  onAllFilter(e) {
     this.setState({
       data: this.state.originData,
       originData: this.state.originData
@@ -50,63 +50,29 @@ class Products extends Component {
   }
 
   onExpiredFilter() {
-    const filteredList = this.state.originData.filter(item => {
-      const warrantyPeriod = parseInt(
-        item.warrantyPeriod.slice(0, item.warrantyPeriod.indexOf("year"))
-      );
-      const extendedWarranty = parseInt(
-        item.extendedWarranty.slice(0, item.extendedWarranty.indexOf("year"))
-      );
-      const sum =
-        (isNaN(warrantyPeriod) ? 0 : warrantyPeriod) +
-        (isNaN(extendedWarranty) ? 0 : extendedWarranty);
-
-      const tempArr = item.orderedDate.split("/");
-      const expiringDate = new Date(
-        parseInt(tempArr[2]) + sum,
-        tempArr[1],
-        tempArr[0]
-      );
-      const currentDate = new Date();
-
-      //console.log(warrantyPeriod, extendedWarranty, sum);
-      return expiringDate - currentDate <= 0;
-    });
     this.setState({
-      data: filteredList,
+      data: onExpiredFilterHelper(this.state.originData),
       originData: this.state.originData
     });
   }
 
   onExpiringSoonFilter() {
-    const filteredList = this.state.originData.filter(item => {
-      const warrantyPeriod = parseInt(
-        item.warrantyPeriod.slice(0, item.warrantyPeriod.indexOf("year"))
-      );
-      const extendedWarranty = parseInt(
-        item.extendedWarranty.slice(0, item.extendedWarranty.indexOf("year"))
-      );
-      const sum =
-        (isNaN(warrantyPeriod) ? 0 : warrantyPeriod) +
-        (isNaN(extendedWarranty) ? 0 : extendedWarranty);
-
-      const tempArr = item.orderedDate.split("/");
-      const expiringDate = new Date(
-        parseInt(tempArr[2]) + sum,
-        tempArr[1],
-        tempArr[0]
-      );
-      const currentDate = new Date();
-      const bool = expiringDate - currentDate > 0;
-      //expiring in next 120 days
-      expiringDate.setDate(expiringDate.getDate() - 120);
-
-      //console.log(warrantyPeriod, extendedWarranty, sum);
-      return bool && expiringDate - currentDate <= 0;
-    });
     this.setState({
-      data: filteredList,
+      data: onExpiringSoonFilterHelper(this.state.originData),
       originData: this.state.originData
+    });
+  }
+
+  onPageSelected(pageNum) {
+    this.setState({
+      data: getPageData(
+        this.state.originData,
+        pageNum,
+        this.state.per_page_doc
+      ),
+      originData: this.state.originData,
+      current_page: pageNum,
+      per_page_doc: this.state.per_page_doc
     });
   }
 
@@ -127,6 +93,11 @@ class Products extends Component {
         />
         <br />
         <ProductList data={this.state.data} />
+        <br />
+        <PaginationComponent
+          onPageSelected={this.onPageSelected}
+          items={this.state.originData}
+        />
       </div>
     );
   }
