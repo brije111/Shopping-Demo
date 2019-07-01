@@ -1,19 +1,15 @@
 import React from "react";
 import "./App.css";
 import Products from "./components/Products";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import ProductDetail from "./components/ProductDetail";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+//import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 function App() {
   return (
     <Router>
-    <div className="App">
-      <Link to='/'>
-      <Products />
-      </Link>
-    </div>
-    <Route path="/detail/" component={ProductDetail} />
-    <Route path="/" component={Products} />
+      <Route path="/detail/" component={ProductDetail} />
+      <Route path="/" component={Products} exact />
     </Router>
   );
 }

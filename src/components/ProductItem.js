@@ -1,33 +1,43 @@
 import React, { Component } from "react";
 import { Image, Col, Card } from "react-bootstrap";
-import image1 from "../images/img_2.png";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import ProductDetail from "./ProductDetail";
 
-class ProductItem extends Component {
-  render() {
-    return (
-      <Col sm={4}>
-        <Link to='/detail'>
-        <Card className="m-2">
-          <div className="m-2">
-            <Image src={image1} fluid />
-            <h6>{this.props.data.name}</h6>
+function ProductItem(props) {
+  const data = props.data;
+  return (
+    <Col sm={6} md={4} lg={3}>
+      <Link
+        to={{
+          pathname: "/detail",
+          state: { data }
+        }}
+      >
+        <Card className="m-1">
+          <div className="m-1">
+            <Image src="/assets/images/img_2.png" fluid />
+            <h6
+              style={{
+                overflow: "hidden",
+                whiteSpace: "nowrap",
+                textOverflow: "ellipsis",
+                maxLines: 1
+              }}
+            >
+              {data.name}
+            </h6>
             <label>Order Date : </label>
-            {this.props.data.orderedDate}
+            {data.orderedDate}
             <br />
             <label>Warranty Period : </label>
-            {this.props.data.warrantyPeriod}
+            {data.warrantyPeriod}
             <br />
             <label>Extended Warranty : </label>
-            {this.props.data.extendedWarranty}
+            {data.extendedWarranty}
           </div>
         </Card>
-        </Link>
-      </Col>
-
-    );
-  }
+      </Link>
+    </Col>
+  );
 }
 
 export default ProductItem;

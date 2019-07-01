@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 import ProductFilter from "./ProductFilter";
 import ProductList from "./ProductList";
-import axios from "axios";
 import { Jumbotron } from "react-bootstrap";
 import {
-  getAllProductHelper,
   onExpiredFilterHelper,
   onExpiringSoonFilterHelper,
-  getPageData
+  getPageData,
+  loadData
 } from "../helper/Producthelper";
 import PaginationComponent from "./PaginationComponent";
 
@@ -27,19 +26,12 @@ class Products extends Component {
   }
 
   componentDidMount() {
-    axios
-      .get("assets/raw/products.json")
-      .then(response => {
-        console.log(response.data);
-        const _data = getAllProductHelper(response.data);
-        this.setState({
-          data: getPageData(_data),
-          originData: _data
-        });
-      })
-      .catch(err => {
-        console.log(err);
+    loadData((data)=>{
+      this.setState({
+        data: getPageData(data),
+        originData: data
       });
+    })
   }
 
   onAllFilter(e) {
@@ -78,7 +70,7 @@ class Products extends Component {
 
   render() {
     return (
-      <div>
+      <div className="App">
         <Jumbotron>
           <h1>Sony</h1>
           <p>
@@ -93,8 +85,8 @@ class Products extends Component {
         />
         <br />
         <ProductList data={this.state.data} />
-        <br />
-        <PaginationComponent
+        <br />  
+        <PaginationComponent style={{textAlign: 'center'}}
           onPageSelected={this.onPageSelected}
           items={this.state.originData}
         />

@@ -1,3 +1,18 @@
+import axios from "axios";
+
+export function loadData(func){
+  axios
+      .get("assets/raw/products.json")
+      .then(response => {
+        console.log(response.data);
+        const _data = getAllProductHelper(response.data);
+        func(_data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+}
+
 export function getAllProductHelper(json, products = []) {
   if (json.hasOwnProperty("children")) {
     json.children.forEach(element => {
