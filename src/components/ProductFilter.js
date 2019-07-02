@@ -5,9 +5,9 @@ function ProductFilter(props){
     return (
       <div>
         <DropdownButton className="m-2" id="dropdown-basic-button" title="Product Filter">
-          <Dropdown.Item onClick={props.onAllFilter}>all products</Dropdown.Item>
-          <Dropdown.Item onClick={props.onExpiredFilter}>expired warranty</Dropdown.Item>
-          <Dropdown.Item onClick={props.onExpiringSoonFilter}>expiring soon</Dropdown.Item>
+          <Dropdown.Item onClick={props.onAllFilter}>All Products</Dropdown.Item>
+          <Dropdown.Item onClick={props.onExpiredFilter}>Expired Warranty</Dropdown.Item>
+          <Dropdown.Item onClick={props.onExpiringSoonFilter}>Expiring Soon</Dropdown.Item>
         </DropdownButton>
       </div>
     );

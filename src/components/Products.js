@@ -34,7 +34,7 @@ class Products extends Component {
     })
   }
 
-  onAllFilter(e) {
+  onAllFilter() {
     this.setState({
       data: this.state.originData,
       originData: this.state.originData

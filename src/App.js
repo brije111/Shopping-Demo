@@ -8,7 +8,7 @@ import ProductDetail from "./components/ProductDetail";
 function App() {
   return (
     <Router>
-      <Route path="/detail/" component={ProductDetail} />
+      <Route path="/detail" component={ProductDetail} />
       <Route path="/" component={Products} exact />
     </Router>
   );
