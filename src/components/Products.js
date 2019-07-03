@@ -88,7 +88,7 @@ class Products extends Component {
         <br />  
         <PaginationComponent style={{textAlign: 'center'}}
           onPageSelected={this.onPageSelected}
-          items={this.state.originData}
+          itemsLength={this.state.originData.length}
         />
       </div>
     );

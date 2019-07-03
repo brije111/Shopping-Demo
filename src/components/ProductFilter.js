@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Dropdown, DropdownButton } from "react-bootstrap";
+import PropTypes from 'prop-types';
 
 function ProductFilter(props){
     return (
@@ -11,6 +12,12 @@ function ProductFilter(props){
         </DropdownButton>
       </div>
     );
+}
+
+ProductFilter.propTypes = {
+  onAllFilter:PropTypes.func, 
+  onExpiredFilter:PropTypes.func, 
+  onExpiringSoonFilter:PropTypes.func
 }
 
 export default ProductFilter;

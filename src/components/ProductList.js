@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ProductItem from "./ProductItem";
 import { Container, Row } from "react-bootstrap";
+import PropTypes from 'prop-types';
 
 function ProductList(props) {
   return (
@@ -12,6 +13,10 @@ function ProductList(props) {
       </Row>
     </Container>
   );
+}
+
+ProductList.propTypes = {
+  data:PropTypes.array
 }
 
 export default ProductList;

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Pagination } from "react-bootstrap";
+import PropTypes from 'prop-types';
 
 class PaginationComponent extends Component {
   constructor(props) {
@@ -27,12 +28,17 @@ class PaginationComponent extends Component {
         </Pagination.Item>
       );
       number++;
-    } while (items.length * 9 < this.props.items.length);
+    } while (items.length * 9 < this.props.itemsLength);
     return items;
   }
   render() {
     return <Pagination>{this.getPaginationItems()}</Pagination>;
   }
+}
+
+PaginationComponent.propTypes = {
+  onPageSelected:PropTypes.func, 
+  itemsLength:PropTypes.number
 }
 
 export default PaginationComponent;
