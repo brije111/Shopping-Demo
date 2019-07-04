@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Pagination } from "react-bootstrap";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
 class PaginationComponent extends Component {
   constructor(props) {
@@ -16,8 +17,11 @@ class PaginationComponent extends Component {
   }
   getPaginationItems() {
     let items = [];
-    let number = 1;
-    do {
+    for (
+      let number = 1;
+      number <= Math.ceil(this.props.data.length / this.props.per_page_doc);
+      number++
+    ) {
       items.push(
         <Pagination.Item
           onClick={this.onPaginationClick}
@@ -27,18 +31,28 @@ class PaginationComponent extends Component {
           {number}
         </Pagination.Item>
       );
-      number++;
-    } while (items.length * 9 < this.props.itemsLength);
+    }
     return items;
   }
   render() {
-    return <Pagination>{this.getPaginationItems()}</Pagination>;
+    return (
+      <Pagination className="justify-content-center">
+        {this.getPaginationItems()}
+      </Pagination>
+    );
   }
 }
 
 PaginationComponent.propTypes = {
-  onPageSelected:PropTypes.func, 
-  itemsLength:PropTypes.number
-}
+  onPageSelected: PropTypes.func,
+  itemsLength: PropTypes.number
+};
 
-export default PaginationComponent;
+const mapStateToProps = state => {
+  return {
+    data: state.originData,
+    per_page_doc: state.per_page_doc
+  };
+};
+
+export default connect(mapStateToProps)(PaginationComponent);

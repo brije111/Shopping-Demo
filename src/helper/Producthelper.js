@@ -80,10 +80,7 @@ export function onExpiringSoonFilterHelper(originData) {
 }
 
 export function getPageData(arr, currentPage = 1, pagePerDoc = 9) {
-  if (currentPage === 1) return arr.slice(0, pagePerDoc);
-  else
-    return arr.slice(
-      (currentPage - 1) * pagePerDoc + 1,
-      currentPage * pagePerDoc
-    );
+  const lastIndex = currentPage * pagePerDoc;
+  const firstIndex = lastIndex - pagePerDoc;
+  return arr.slice(firstIndex, lastIndex);
 }

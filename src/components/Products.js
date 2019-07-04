@@ -1,24 +1,21 @@
 import React, { Component } from "react";
 import ProductFilter from "./ProductFilter";
 import ProductList from "./ProductList";
-import { Jumbotron } from "react-bootstrap";
-import {
-  onExpiredFilterHelper,
-  onExpiringSoonFilterHelper,
-  getPageData,
-  loadData
-} from "../helper/Producthelper";
+import { loadData } from "../helper/Producthelper";
 import PaginationComponent from "./PaginationComponent";
+import NavBarComponent from "./NavBarComponent";
+import {
+  actionFilterAll,
+  actionFilterExpiringSoon,
+  actionFilterExpired,
+  actionAddData,
+  actionPageData
+} from "../actions";
+import { connect } from "react-redux";
 
 class Products extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      data: [],
-      originData: [],
-      current_page: 1,
-      per_page_doc: 9
-    };
     this.onAllFilter = this.onAllFilter.bind(this);
     this.onExpiredFilter = this.onExpiredFilter.bind(this);
     this.onExpiringSoonFilter = this.onExpiringSoonFilter.bind(this);
@@ -26,73 +23,64 @@ class Products extends Component {
   }
 
   componentDidMount() {
-    loadData((data)=>{
-      this.setState({
-        data: getPageData(data),
-        originData: data
-      });
-    })
+    loadData(data => {
+      this.props.actionAddData(data);
+    });
   }
 
   onAllFilter() {
-    this.setState({
-      data: this.state.originData,
-      originData: this.state.originData
-    });
+    this.props.actionFilterAll();
   }
 
   onExpiredFilter() {
-    this.setState({
-      data: onExpiredFilterHelper(this.state.originData),
-      originData: this.state.originData
-    });
+    this.props.actionFilterExpired();
   }
 
   onExpiringSoonFilter() {
-    this.setState({
-      data: onExpiringSoonFilterHelper(this.state.originData),
-      originData: this.state.originData
-    });
+    this.props.actionFilterExpiringSoon();
   }
 
   onPageSelected(pageNum) {
-    this.setState({
-      data: getPageData(
-        this.state.originData,
-        pageNum,
-        this.state.per_page_doc
-      ),
-      originData: this.state.originData,
-      current_page: pageNum,
-      per_page_doc: this.state.per_page_doc
-    });
+    this.props.actionPageData(pageNum);
   }
 
   render() {
     return (
       <div className="App">
-        <Jumbotron>
-          <h1>Sony</h1>
-          <p>
-            A range of premium camera products with plenty of features. Buy more
-            and get a chance to earn a lens for free.
-          </p>
-        </Jumbotron>
+        <NavBarComponent />
         <ProductFilter
           onAllFilter={this.onAllFilter}
           onExpiredFilter={this.onExpiredFilter}
           onExpiringSoonFilter={this.onExpiringSoonFilter}
         />
         <br />
-        <ProductList data={this.state.data} />
-        <br />  
-        <PaginationComponent style={{textAlign: 'center'}}
+        <ProductList />
+        <br />
+        <PaginationComponent
+          style={{ textAlign: "center" }}
           onPageSelected={this.onPageSelected}
-          itemsLength={this.state.originData.length}
         />
       </div>
     );
   }
 }
+const mapStateToProps = state => {
+  return {
+    data: state.data,
+    originData: state.originData,
+    current_page: state.current_page,
+    per_page_doc: state.per_page_doc
+  };
+};
 
-export default Products;
+const mapDispatchToProps = {
+  actionAddData,
+  actionFilterAll,
+  actionFilterExpired,
+  actionFilterExpiringSoon,
+  actionPageData
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Products);

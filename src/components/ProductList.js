@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ProductItem from "./ProductItem";
 import { Container, Row } from "react-bootstrap";
 import PropTypes from 'prop-types';
+import { connect } from "react-redux";
 
 function ProductList(props) {
   return (
@@ -19,4 +20,13 @@ ProductList.propTypes = {
   data:PropTypes.array
 }
 
-export default ProductList;
+const mapStateToProps = state => {
+  return {
+    data: state.data
+  };
+};
+
+export default connect(
+  mapStateToProps
+)(ProductList);
+
