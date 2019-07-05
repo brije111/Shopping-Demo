@@ -84,3 +84,41 @@ export function getPageData(arr, currentPage = 1, pagePerDoc = 9) {
   const firstIndex = lastIndex - pagePerDoc;
   return arr.slice(firstIndex, lastIndex);
 }
+
+export function getCartData(cart, prodId) {
+  if(cart.hasOwnProperty(prodId)){
+    cart[prodId] = cart[prodId]+1;
+  }else{
+    cart[prodId]=1;
+  }
+  return cart;
+}
+
+export function getIncrementCartData(cart, prodId) {
+  if(cart.hasOwnProperty(prodId)){
+    if(parseInt(cart[prodId])===10){
+      alert('Can not exceed more. You can add max of 10 per item');
+    }else{
+      cart[prodId] = cart[prodId]+1;
+    }
+  }
+  return cart;
+}
+
+export function getDecrementCartData(cart, prodId) {
+  if(cart.hasOwnProperty(prodId)){
+    if(parseInt(cart[prodId])===1){
+      alert('Can not decrease more. You must have al least 1 item or delete it');
+    }else{
+      cart[prodId] = cart[prodId]-1;
+    }
+  }
+  return cart;
+}
+
+export function getDeleteCartData(cart, prodId) {
+  if(cart.hasOwnProperty(prodId)){
+    delete cart[prodId];
+  }
+  return cart;
+}

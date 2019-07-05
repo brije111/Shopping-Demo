@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ProductItem from "./ProductItem";
 import { Container, Row } from "react-bootstrap";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 function ProductList(props) {
@@ -9,7 +9,7 @@ function ProductList(props) {
     <Container>
       <Row>
         {props.data.map(prod => (
-          <ProductItem key={prod.serialNo} data={prod} />
+          <ProductItem onAddToCartClick={props.onAddToCartClick} key={prod.serialNo} data={prod} />
         ))}
       </Row>
     </Container>
@@ -17,8 +17,8 @@ function ProductList(props) {
 }
 
 ProductList.propTypes = {
-  data:PropTypes.array
-}
+  data: PropTypes.array
+};
 
 const mapStateToProps = state => {
   return {
@@ -26,7 +26,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(
-  mapStateToProps
-)(ProductList);
-
+export default connect(mapStateToProps)(ProductList);

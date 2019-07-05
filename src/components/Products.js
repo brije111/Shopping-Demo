@@ -9,7 +9,8 @@ import {
   actionFilterExpiringSoon,
   actionFilterExpired,
   actionAddData,
-  actionPageData
+  actionPageData,
+  actionAddToCart
 } from "../actions";
 import { connect } from "react-redux";
 
@@ -20,6 +21,7 @@ class Products extends Component {
     this.onExpiredFilter = this.onExpiredFilter.bind(this);
     this.onExpiringSoonFilter = this.onExpiringSoonFilter.bind(this);
     this.onPageSelected = this.onPageSelected.bind(this);
+    this.onAddToCartClick = this.onAddToCartClick.bind(this);
   }
 
   componentDidMount() {
@@ -44,6 +46,10 @@ class Products extends Component {
     this.props.actionPageData(pageNum);
   }
 
+  onAddToCartClick(prodId) {
+    this.props.actionAddToCart(prodId);
+  }
+
   render() {
     return (
       <div className="App">
@@ -54,7 +60,7 @@ class Products extends Component {
           onExpiringSoonFilter={this.onExpiringSoonFilter}
         />
         <br />
-        <ProductList />
+        <ProductList onAddToCartClick={this.onAddToCartClick} />
         <br />
         <PaginationComponent
           style={{ textAlign: "center" }}
@@ -78,7 +84,8 @@ const mapDispatchToProps = {
   actionFilterAll,
   actionFilterExpired,
   actionFilterExpiringSoon,
-  actionPageData
+  actionPageData,
+  actionAddToCart
 };
 export default connect(
   mapStateToProps,
