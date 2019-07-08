@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Image, Col, Card, Button } from "react-bootstrap";
 import {Link } from "react-router-dom";
+import { connect } from "react-redux";
 
 function ProductItem(props) {
   const data = props.data;
@@ -19,29 +20,26 @@ function ProductItem(props) {
           >
             {data.name}
           </h6>
-          <label>Order Date : </label>
-          {data.orderedDate}
+          <span style={{ color: "grey"}}>Price : </span>
+          {"$ "+(data.price)}
           <br />
-          <label>Warranty Period : </label>
+          <span style={{ color: "grey" }}>Warranty Period : </span>
           {data.warrantyPeriod}
           <br />
-          <label>Extended Warranty : </label>
+          <span style={{ color: "grey" }}>Extended Warranty : </span>
           {data.extendedWarranty}
-            <br />
+            <br /><br />
           <Link
             style={{ color: "black", textDecoration: "none" }}
-            to={{
-              pathname: "/detail",
-              state: { data }
-            }}
+            to={"/detail/"+data.imei}
           >
             <Button className='m-1' variant="secondary">View Detail</Button>
           </Link>
           <Button className='m-1'
-            variant="primary"
+            variant={props.cart.hasOwnProperty(data.serialNo)?"warning":"primary"}
             onClick={() => props.onAddToCartClick(data.serialNo)}
           >
-            Add to Cart
+            {props.cart.hasOwnProperty(data.serialNo)?"Remove":"Add to Cart"}
           </Button>
         </div>
       </Card>
@@ -49,4 +47,10 @@ function ProductItem(props) {
   );
 }
 
-export default ProductItem;
+const mapStateToProps = state => {
+  return {
+    cart: state.cart
+  };
+};
+
+export default connect(mapStateToProps)(ProductItem);

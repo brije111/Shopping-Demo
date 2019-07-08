@@ -1,10 +1,10 @@
 import React from "react";
 import { Jumbotron, Image, Tabs, Tab } from "react-bootstrap";
 import ProductDetailTabItem from "./ProductDetailTabItem";
-//import image1 from "../images/img_2.png";
+import { connect } from "react-redux";
 
 function ProductDetail(props) {
-  const data = props.location.state.data;
+  const data = props.data.find(item=>item.imei===props.match.params.id);
   return (
     <div className="container-fluid">
       <Jumbotron>
@@ -60,4 +60,10 @@ function ProductDetail(props) {
   );
 }
 
-export default ProductDetail;
+const mapStateToProps = state => {
+  return {
+    data: state.data
+  };
+};
+
+export default connect(mapStateToProps)(ProductDetail);

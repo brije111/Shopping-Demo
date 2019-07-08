@@ -1,22 +1,25 @@
 import React, { Component } from "react";
-import ProductFilter from "./ProductFilter";
-import ProductList from "./ProductList";
-import { loadData } from "../helper/Producthelper";
-import PaginationComponent from "./PaginationComponent";
-import NavBarComponent from "./NavBarComponent";
+import ProductFilter from "./filter/index";
+import ProductList from "./products/index";
+import { loadData } from "../helper/index";
+import PaginationComponent from "./pagination/index";
+import NavBarComponent from "./navbar/index";
 import {
+  actionFilterNone,
   actionFilterAll,
   actionFilterExpiringSoon,
   actionFilterExpired,
   actionAddData,
   actionPageData,
-  actionAddToCart
+  actionAddToCart,
+  actionDeleteCart
 } from "../actions";
 import { connect } from "react-redux";
 
 class Products extends Component {
   constructor(props) {
     super(props);
+    this.onNoFilter = this.onNoFilter.bind(this);
     this.onAllFilter = this.onAllFilter.bind(this);
     this.onExpiredFilter = this.onExpiredFilter.bind(this);
     this.onExpiringSoonFilter = this.onExpiringSoonFilter.bind(this);
@@ -25,9 +28,14 @@ class Products extends Component {
   }
 
   componentDidMount() {
+    //localStorage.removeItem('cart');
     loadData(data => {
       this.props.actionAddData(data);
     });
+  }
+
+  onNoFilter() {
+    this.props.actionFilterNone();
   }
 
   onAllFilter() {
@@ -47,7 +55,11 @@ class Products extends Component {
   }
 
   onAddToCartClick(prodId) {
-    this.props.actionAddToCart(prodId);
+    if(this.props.cart.hasOwnProperty(prodId)){
+      this.props.actionDeleteCart(prodId);
+    }else{
+      this.props.actionAddToCart(prodId);
+    }
   }
 
   render() {
@@ -55,6 +67,7 @@ class Products extends Component {
       <div className="App">
         <NavBarComponent />
         <ProductFilter
+          onNoFilter={this.onNoFilter}
           onAllFilter={this.onAllFilter}
           onExpiredFilter={this.onExpiredFilter}
           onExpiringSoonFilter={this.onExpiringSoonFilter}
@@ -62,10 +75,7 @@ class Products extends Component {
         <br />
         <ProductList onAddToCartClick={this.onAddToCartClick} />
         <br />
-        <PaginationComponent
-          style={{ textAlign: "center" }}
-          onPageSelected={this.onPageSelected}
-        />
+        <PaginationComponent onPageSelected={this.onPageSelected} />
       </div>
     );
   }
@@ -75,17 +85,20 @@ const mapStateToProps = state => {
     data: state.data,
     originData: state.originData,
     current_page: state.current_page,
-    per_page_doc: state.per_page_doc
+    per_page_doc: state.per_page_doc,
+    cart:state.cart
   };
 };
 
 const mapDispatchToProps = {
   actionAddData,
+  actionFilterNone,
   actionFilterAll,
   actionFilterExpired,
   actionFilterExpiringSoon,
   actionPageData,
-  actionAddToCart
+  actionAddToCart,
+  actionDeleteCart
 };
 export default connect(
   mapStateToProps,

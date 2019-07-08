@@ -7,11 +7,16 @@ import {
   ADD_TO_CART,
   INCREMENT_CART,
   DECREMENT_CART,
-  DELETE_CART
+  DELETE_CART,
+  FILTER_NONE
 } from "../constants/action-types";
 
 export function actionAddData(data) {
   return { type: ADD_DATA, data };
+}
+
+export function actionFilterNone() {
+  return { type: FILTER_NONE };
 }
 
 export function actionFilterAll() {

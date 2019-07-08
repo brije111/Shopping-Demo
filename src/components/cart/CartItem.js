@@ -24,7 +24,7 @@ const CartItem = props => {
       </div>
       <div className="col-sm-3">
         <div className="float-right align-items-center">
-          <h2>$ {props.data.price}</h2>
+          <h2>{"$ "+(props.data.price)}</h2>
           <div className="m-2">
             <Button onClick={()=>props.onDecrement(props.data.serialNo)} className="m-2" variant="primary">
               -

@@ -1,11 +1,11 @@
 import React from "react";
 import "./App.css";
-import Products from "./components/Products";
+import Products from "./components/Base";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import ProductDetail from "./components/ProductDetail";
+import ProductDetail from "./components/products/ProductDetail";
 import { Provider } from "react-redux";
 import store from "./store/index";
-import CartComponent from "./components/CartComponent";
+import CartComponent from "./components/cart/index";
 //import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 function App() {
@@ -13,7 +13,7 @@ function App() {
     <Provider store={store}>
       <Router>
         <Route path="/cart" component={CartComponent} />
-        <Route path="/detail" component={ProductDetail} />
+        <Route path="/detail/:id" component={ProductDetail} />
         <Route path="/" component={Products} exact />
       </Router>
     </Provider>

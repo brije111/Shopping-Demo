@@ -7,7 +7,7 @@ import {
   actionIncrementCart,
   actionDecrementCart,
   actionDeleteCart
-} from "../actions";
+} from "../../actions";
 
 class CartComponent extends Component {
   constructor(props) {
@@ -35,6 +35,7 @@ class CartComponent extends Component {
           {Object.keys(this.props.cart).map(item => (
             <ListGroup.Item>
               <CartItem
+                key={item}
                 onIncrement={this.onIncrement}
                 onDecrement={this.onDecrement}
                 onDelete={this.onDelete}
