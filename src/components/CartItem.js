@@ -4,6 +4,8 @@ import { Image, Button } from "react-bootstrap";
 import { connect } from "react-redux";
 
 const CartItem = props => {
+  console.log(props.cart);
+  
   return (
     <div className="row">
       <div className="col-sm-3">

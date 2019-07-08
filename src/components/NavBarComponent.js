@@ -1,10 +1,11 @@
 import React from "react";
-import PropTypes from "prop-types";
+//import PropTypes from "prop-types";
 import { Navbar, Nav, Badge } from "react-bootstrap";
 import { connect } from "react-redux";
 import {Link} from 'react-router-dom';
 
 const NavBarComponent = props => {
+  
   return (
     <div>
       <Navbar bg="primary" variant="dark" fixed="top">
@@ -28,10 +29,10 @@ const NavBarComponent = props => {
             style={{ color: "black", textDecoration: "none" }}
             to="/cart"
           >
-      <Nav.Link href="#deets">
-        <i className="fa fa-cart-plus" aria-hidden="true"><span className="m-2">Cart</span></i>
-        <Badge variant="secondary">{Object.keys(props.cart).length}</Badge>
-        </Nav.Link>
+      <div >
+        <i style={{color:'white'}} className="fa fa-cart-plus" aria-hidden="true"><span style={{color:'white'}} className="m-2">Cart</span></i>
+        {Object.keys(props.cart).length===0?<div></div>:<Badge variant="warning">{Object.keys(props.cart).length}</Badge>}
+        </div>
         </Link>
     </Nav>
       </Navbar>
@@ -39,7 +40,6 @@ const NavBarComponent = props => {
   );
 };
 
-NavBarComponent.propTypes = {};
 
 const mapStateToProps = state => {
   return {

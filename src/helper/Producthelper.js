@@ -91,7 +91,7 @@ export function getCartData(cart, prodId) {
   }else{
     cart[prodId]=1;
   }
-  return cart;
+  return {...cart};
 }
 
 export function getIncrementCartData(cart, prodId) {
@@ -102,7 +102,7 @@ export function getIncrementCartData(cart, prodId) {
       cart[prodId] = cart[prodId]+1;
     }
   }
-  return cart;
+  return {...cart};
 }
 
 export function getDecrementCartData(cart, prodId) {
@@ -113,12 +113,12 @@ export function getDecrementCartData(cart, prodId) {
       cart[prodId] = cart[prodId]-1;
     }
   }
-  return cart;
+  return {...cart};
 }
 
 export function getDeleteCartData(cart, prodId) {
   if(cart.hasOwnProperty(prodId)){
     delete cart[prodId];
   }
-  return cart;
+  return {...cart};
 }
