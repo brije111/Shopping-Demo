@@ -9,7 +9,7 @@ const CartItem = props => {
   return (
     <div className="row">
       <div className="col-sm-3">
-        <Image src="/assets/images/img_2.png" fluid />
+        <Image style={{height:200}} src={props.data.imageSrc} fluid />
       </div>
       <div className="col-sm-6">
         <h3>{props.data.name}</h3>

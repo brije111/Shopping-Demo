@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import CartItem from "./CartItem";
-import { ListGroup } from "react-bootstrap";
+import { ListGroup, Jumbotron } from "react-bootstrap";
 import {
   actionIncrementCart,
   actionDecrementCart,
@@ -31,6 +31,9 @@ class CartComponent extends Component {
   render() {
     return (
       <div>
+        <Jumbotron>
+          <h1>Cart</h1>
+        </Jumbotron>
         <ListGroup>
           {Object.keys(this.props.cart).map(item => (
             <ListGroup.Item>

@@ -9,7 +9,7 @@ function ProductItem(props) {
     <Col sm={6} md={4} lg={3}>
       <Card className="m-1">
         <div className="m-1">
-          <Image src="/assets/images/img_2.png" fluid />
+          <Image style={{height:200}} src={data.imageSrc} fluid />
           <h6
             style={{
               overflow: "hidden",

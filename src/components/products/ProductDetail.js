@@ -12,7 +12,7 @@ function ProductDetail(props) {
       </Jumbotron>
       <div className="row">
         <div className="col-sm-4">
-          <Image src="/assets/images/img_2.png" fluid />
+          <Image style={{height:300}} src={data.imageSrc} fluid />
         </div>
         <div className="col-sm-8">
           <h2 id="name">{data.name}</h2>
