@@ -62,7 +62,7 @@ function ProductDetail(props) {
 
 const mapStateToProps = state => {
   return {
-    data: state.data
+    data: state.prd.data
   };
 };
 

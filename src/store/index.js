@@ -1,8 +1,8 @@
-import { createStore} from "redux";
-import ProductReducer from "../reducers/index";
+import { createStore } from "redux";
+import reducer from "../reducers/index";
 
 const store = createStore(
-  ProductReducer,
+  reducer,
   window.devToolsExtension ? window.devToolsExtension() : undefined
 );
 export default store;

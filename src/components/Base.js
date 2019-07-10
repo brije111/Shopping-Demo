@@ -82,11 +82,11 @@ class Products extends Component {
 }
 const mapStateToProps = state => {
   return {
-    data: state.data,
-    originData: state.originData,
-    current_page: state.current_page,
-    per_page_doc: state.per_page_doc,
-    cart:state.cart
+    data: state.prd.data,
+    originData: state.prd.originData,
+    current_page: state.prd.current_page,
+    per_page_doc: state.prd.per_page_doc,
+    cart:state.crt.cart
   };
 };
 

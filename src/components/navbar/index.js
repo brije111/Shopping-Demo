@@ -43,7 +43,7 @@ const NavBarComponent = props => {
 
 const mapStateToProps = state => {
   return {
-    cart: state.cart
+    cart: state.crt.cart
   };
 };
 

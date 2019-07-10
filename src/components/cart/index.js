@@ -57,8 +57,8 @@ CartComponent.propTypes = {};
 
 const mapStateToProps = state => {
   return {
-    cart: state.cart,
-    originData: state.originData
+    cart: state.crt.cart,
+    originData: state.prd.originData
   };
 };
 

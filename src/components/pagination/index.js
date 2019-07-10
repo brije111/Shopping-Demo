@@ -82,11 +82,11 @@ PaginationComponent.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    data: state.data,
-    originData: state.originData,
-    choosenFilter: state.choosenFilter,
-    per_page_doc: state.per_page_doc,
-    current_page: state.current_page
+    data: state.prd.data,
+    originData: state.prd.originData,
+    choosenFilter: state.prd.choosenFilter,
+    per_page_doc: state.prd.per_page_doc,
+    current_page: state.prd.current_page
   };
 };
 
